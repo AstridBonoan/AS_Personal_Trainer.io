@@ -8,8 +8,17 @@ Elite personal trainer marketing site — mobile-first React + Tailwind, built f
 
 - High-impact hero, transformation showcase, programs, testimonials, pricing, and booking
 - Mobile-first responsive layout
-- GitHub Actions CI build on every push to `main`
-- GitHub Pages **Deploy from a branch** (`main` → `/docs`)
+- GitHub Actions deploys the production build to the **`gh-pages` branch**
+- GitHub Pages **Deploy from a branch** (`gh-pages` → `/`)
+
+## GitHub Pages setup (required once)
+
+1. Open **Settings → Pages** in the repository.
+2. Under **Build and deployment**, set **Source** to **Deploy from a branch**.
+3. **Branch:** `gh-pages` · **Folder:** `/ (root)`
+4. Save and wait ~1 minute for the site to update.
+
+> Do **not** use `main` or `/docs` — that serves the dev `index.html` and causes a blank page / `main.tsx` 404.
 
 ## Local development
 
@@ -18,25 +27,15 @@ npm install
 npm run dev
 ```
 
-## Build
+## Build & manual deploy
 
 ```bash
-npm run build
+npm run build          # output in dist/
+npm run deploy         # build + push dist/ to gh-pages branch
 ```
-
-Output is written to `docs/` for GitHub Pages.
-
-## GitHub Pages setup (required once)
-
-1. Open **Settings → Pages** in the repository.
-2. Under **Build and deployment**, set **Source** to **Deploy from a branch**.
-3. Select **Branch:** `main`, **Folder:** `/docs`.
-4. Save.
-
-Pushes to `main` trigger [.github/workflows/deploy.yml](.github/workflows/deploy.yml), which rebuilds and updates the `docs/` folder automatically.
 
 ## Tech stack
 
 - [Vite](https://vite.dev/) + React + TypeScript
 - [Tailwind CSS v4](https://tailwindcss.com/)
-- GitHub Actions + GitHub Pages
+- [gh-pages](https://www.npmjs.com/package/gh-pages) + GitHub Actions
