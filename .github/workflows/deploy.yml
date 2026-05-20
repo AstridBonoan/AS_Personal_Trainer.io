@@ -1,0 +1,47 @@
+name: Build and Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build site
+        run: npm run build
+
+      - name: Ensure .nojekyll in docs
+        run: |
+          if [ ! -f docs/.nojekyll ]; then
+            cp public/.nojekyll docs/.nojekyll 2>/dev/null || touch docs/.nojekyll
+          fi
+
+      - name: Deploy to GitHub Pages (docs folder on main)
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: main
+          folder: docs
+          target-folder: docs
+          clean: true
+          commit-message: 'deploy: GitHub Pages build ${{ github.sha }}'

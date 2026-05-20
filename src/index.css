@@ -1,0 +1,40 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-display: 'Bebas Neue', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --color-brand: #ff3d00;
+  --color-brand-dark: #e63500;
+  --color-accent: #c6ff00;
+  --color-surface: #0a0a0b;
+  --color-surface-elevated: #141416;
+  --color-muted: #8a8a94;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-surface font-body text-white antialiased;
+  }
+
+  ::selection {
+    @apply bg-accent text-surface;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-accent via-white to-brand bg-clip-text text-transparent;
+  }
+
+  .glow-accent {
+    box-shadow: 0 0 40px rgba(198, 255, 0, 0.25);
+  }
+
+  .glow-brand {
+    box-shadow: 0 0 40px rgba(255, 61, 0, 0.3);
+  }
+}
